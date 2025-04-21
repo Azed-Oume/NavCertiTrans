@@ -1,36 +1,49 @@
 {
   "name": "navcertitrans",
-  "version": "1.0.1",
+  "version": "1.1.5",
   "description": "Navigateur personnalisé pour CertiTrans",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "electron": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dev": "vite",
+    "build": "vite build",
+    "prepare": "vite build",
+    "preview": "vite preview",
+    "start:dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\""
   },
   "build": {
     "appId": "com.certitrans.browser",
     "productName": "NavCertiTrans",
+    "artifactName": "${productName}-Setup-${version}.${ext}",
     "files": [
-      "src/**/*",
+      "dist/**/*",
       "main.js",
-      "preload.js"
+      "preload.js",
+      "src/assets/**/*"
     ],
     "directories": {
       "buildResources": "assets"
     },
     "publish": {
-    "provider": "github",
-    "owner": "Azed-Oume",
-    "repo": "NavCertiTrans"
-  },
-  "win": {
-    "target": "nsis",
-    "icon": "assets/icon.ico"
-  },
+      "provider": "github",
+      "owner": "Azed-Oume",
+      "repo": "NavCertiTrans"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/icons/icon.ico"
+    },
+    "nsis": {
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "NavCertiTrans"
+    },
     "linux": {
       "target": "AppImage",
-      "icon": "assets/icon.png"
+      "icon": "src/assets/icons/icon.png"
     }
   },
   "repository": {
@@ -47,10 +60,18 @@
   "dependencies": {
     "@electron/remote": "^2.1.2",
     "electron-updater": "^6.6.2",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "react": "^19.1.0",
+    "react-cookie": "^8.0.1",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.0",
+    "concurrently": "^9.1.2",
     "electron": "^35.1.5",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "vite": "^6.3.0",
+    "wait-on": "^8.0.3"
   }
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Politique de sécurité (à ajuster pour la prod) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self';" />
+
+    <title>NavCertiTrans</title>
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Icônes & apparence -->
+    <!-- <meta name="theme-color" content="#0050b3" /> -->
+    <meta name="msapplication-TileColor" content="#0050b3" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0050b3" />
+    <link rel="icon" href="./src/assets/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="./src/assets/icons/icon-192x192.png" />
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="src/styles/style.css" />
+  </head>
+
+  <body>
+    <!-- Point d'entrée React -->
+    <div id="app"></div>
+
+    <!-- Service Worker (optionnel mais utile pour PWA) -->
+    <script>
+      const isElectron = navigator.userAgent.toLowerCase().includes("electron");
+      const isSecureContext = location.protocol.startsWith("http");
+    
+      if (!isElectron && isSecureContext && "serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then((reg) => console.log("✅ Service Worker enregistré :", reg))
+          .catch((err) => console.error("❌ Erreur lors de l'enregistrement du Service Worker :", err));
+      }
+    </script>
+    
+    <!-- Script React compilé (main.jsx → bundle avec Vite ou Webpack) -->
+    <script type="module" src="./renderer.jsx"></script>
+  </body>
+</html>

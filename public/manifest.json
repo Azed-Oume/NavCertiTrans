@@ -2,7 +2,7 @@
     "name": "NavCertiTrans",
     "short_name": "NavCerti",
     "description": "Navigateur sécurisé CertiTrans.",
-    "start_url": "./index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#0050b3",
