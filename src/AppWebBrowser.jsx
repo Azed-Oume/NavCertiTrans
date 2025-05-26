@@ -215,6 +215,7 @@
 
 
 // 📦 AppWebBrowser.jsx - Version complète et commentée
+// 📦 AppWebBrowser.jsx - Version corrigée et prête à coller
 import React, { useState, useRef, useEffect } from 'react';
 import './styles/style.css'; // Ton CSS global
 import UpdateChecker from './components/UpdateChecker';
@@ -303,8 +304,9 @@ const AppWebBrowser = () => {
     if (ref) ref.reload();
   };
 
-  const addTab = (url = defaultURL) => {
-    const newTab = createInitialTab(url);
+  // ✅ Correction ici : accepte une URL mais fallback sur defaultURL
+  const addTab = (url) => {
+    const newTab = createInitialTab(url || defaultURL);
     setTabs((prev) => [...prev, newTab]);
     setActiveTabId(newTab.id);
   };
