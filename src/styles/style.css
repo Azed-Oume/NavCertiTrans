@@ -1,180 +1,225 @@
-/* Reset de base */
+/* ==== IMPORTS ==== */
 @import './NavigationBar.css';
 @import './PageNotFound.css';
 
-
+/* ==== RÉINITIALISATION ==== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  html, body {
-    height: 100%;
-    width: 100%;
-  }
-  
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f4f6f8;
-    color: #222;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #app {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-  }
-  
-  
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  
-  /* Barre du haut (navigation & adresse) */
-  .top-bar {
-    display: flex;
-    align-items: center;
-    background-color: #0050b3;
-    padding: 8px;
-    gap: 8px;
-    height: 48px;
-  }
-  
-  /* Boutons (navigation et ajout d’onglets) */
-  .top-bar button {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    font-size: 18px;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .top-bar button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Champ d’adresse */
-  #address {
-    flex: 1;
-    padding: 6px 10px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: none;
-    outline: none;
-  }
-  
-  /* Conteneur d’onglets */
-  #tabs {
-    display: flex;
-    gap: 8px;
-    flex: 1;
-    overflow-x: auto;
-  }
-  
-  #tabs::-webkit-scrollbar {
-    display: none; /* Chrome */
-  }
-  
-  /* Webview en pleine taille */
-  #browser {
-    height: 100vh;
-    width: 100vw;
-    border: none;
-  }
+/* ==== STRUCTURE DE BASE ==== */
+html, body, #app {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f8;
+  color: #222;
+}
 
-  
-  /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
+/* Application entière en flex */
+body, #app {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
+/* Zone principale */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-/* ===== PAGES SECTION ===== */
+/* ==== BARRE DE NAVIGATION ==== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  background-color: #0050b3;
+  padding: 8px;
+  gap: 8px;
+  height: 48px;
+}
+
+.top-bar button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.top-bar button:hover {
+  background-color: #0056b3;
+}
+
+#address {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
+/* ==== ONGLET & BOUTONS ==== */
+#tabs {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  overflow-x: auto;
+}
+
+#tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==== AFFICHAGE DU NAVIGATEUR ==== */
+#browser,
+.browser-wrapper,
+.webview-container,
+webview {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  border: none;
+}
+
+/* webview contenu natif */
+webview::part(inner) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==== SECTION DE PAGE ==== */
 .page-section {
   padding: 2rem;
   color: #222;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
+
 .page-section h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  height: 100vh;
-  width: 100vw;
 }
+
 .page-section p {
   font-size: 1.2rem;
   line-height: 1.5;
   margin-bottom: 1rem;
-  height: 100vh;
-  width: 100vw;
 }
 
+/* ==== CLASSES UTILITAIRES ==== */
+.d-flex { display: flex; }
+.flex-column { flex-direction: column; }
+.flex-grow-1 { flex-grow: 1; }
+.min-vh-100 { min-height: 100vh; }
 
-
-/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
-.browser-wrapper {
-  flex: 1;
+/* ==== GESTION DES ERREURS DE WEBVIEW ==== */
+.webview-error {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffeeee;
+  color: #a00;
+  padding: 2rem;
   height: 100%;
   width: 100%;
 }
 
-.webview-container {
-  flex: 1;
-  display: flex;
-  position: relative;
-  height: 100%;
-  width: 100%;
+.webview-error h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
 }
 
+.webview-error p {
+  font-size: 1.1rem;
+}
 
-webview {
-  flex: 1 1 auto;
-  display: flex;
-  width: 100%;
-  height: 100%;
+.webview-error button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #d9534f;
+  color: white;
   border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-webview::part(inner) {
-  display: block;
-  width: 100%;
-  height: 100%;
+.webview-error button:hover {
+  background-color: #c9302c;
 }
 
-
-.webview.active {
-  display: block;
-}
-
-
-/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
-
-.d-flex {
+/* ==== NAVIGATION BAR & ONGLET ==== */
+.address-bar {
   display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px;
 }
 
-.flex-column {
-  flex-direction: column;
+.address-bar-button {
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
 }
 
-.flex-grow-1 {
+.address-input {
   flex-grow: 1;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
-.min-vh-100 {
-  min-height: 100vh;
+.tabs {
+  display: flex;
+  background: #eee;
+  border: 2px solid #ccc;
+  padding: 4px;
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 5px 10px;
+  margin-right: 5px;
+  background: #ccc;
+  border-radius: 5px;
+  border: 2px solid #aaa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab.active {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.tab button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.add-tab {
+  padding: 5px 10px;
+  background: #2ecc71;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

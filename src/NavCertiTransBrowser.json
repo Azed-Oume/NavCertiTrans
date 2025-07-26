@@ -1,0 +1,8 @@
+{
+  "name": "chrome-navcertitrans",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/"
+  ],
+  "path": "C:\\Program Files\\KeePassXC\\KeePassXC-Browser.exe"
+}

@@ -14,8 +14,10 @@ const UpdateChecker = () => {
   };
 
   useEffect(() => {
+    console.log("✅ UpdateChecker mounted");
     if (window.certitransAPI?.onUpdateStatus) {
       window.certitransAPI.onUpdateStatus((status) => {
+        console.log("📬 Status reçu :", status);
         setMessage(status);
       });
     }

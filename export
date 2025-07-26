@@ -1,0 +1,7 @@
+      PID    PPID    PGID     WINPID   TTY         UID    STIME COMMAND
+     2303    1693    2303      21444  cons0     197609 09:37:38 /c/Users/oumes/.nvm/versions/node/v23.5.0/bin/node
+     1991       1    1991      18704  cons1     197609 09:37:25 /usr/bin/bash
+     2332       1    2332      26872  cons2     197609 11:10:10 /usr/bin/bash
+     1693       1    1693      25684  cons0     197609 09:37:03 /usr/bin/bash
+     2324    1991    2324      31620  cons1     197609 09:38:06 /c/Users/oumes/.nvm/versions/node/v23.5.0/bin/node
+     2638    2332    2638      13104  cons2     197609 11:10:41 /usr/bin/PS

@@ -5,7 +5,7 @@ import UpdateChecker from './components/UpdateChecker';
 
 // 👇 Détection d’environnement : dev ou prod
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-const defaultURL = isDev ? 'http://localhost:1234' : 'https://www.dwaccess.com';
+const defaultURL = isDev ? 'http://localhost:1234' : 'http://localhost:1234';
 
 const AppWebBrowser = () => {
   const webviewRef = useRef(null);

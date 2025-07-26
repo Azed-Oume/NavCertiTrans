@@ -1,0 +1,109 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\oumes\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js global dir --json
+
+PATH: 
+  C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Java\jdk-17\bin;C:\Python311\Scripts\;C:\Python311\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\PostgreSQL\15\bin;C:\Program Files\MongoDB\Server\6.0\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\oumes\Gradle\gradle-8.7\bin;C:\Users\oumes\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\dotnet\;c:\Users\oumes\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files\nodejs\;C:\Program Files\PowerShell\7\;C:\Program Files\Java\jdk-17\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Java\jdk-17\bin;C:\Python311\Scripts\;C:\Python311\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\PostgreSQL\15\bin;C:\Program Files\MongoDB\Server\6.0\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\oumes\Gradle\gradle-8.7\bin;C:\Users\oumes\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\dotnet\;c:\Users\oumes\AppData\Local\Programs\cursor\resources\app\bin;C:\Program Files\nodejs\;C:\Program Files\PowerShell\7\;C:\Users\oumes\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\oumes\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\oumes\AppData\Local\Microsoft\WindowsApps;C:\Users\oumes\AppData\Roaming\npm;C:\Users\oumes\AppData\Local\Programs\cursor\resources\app\bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  22.14.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: c:\COUR\TOUT-MES-REPO\NavCertiTrans\package.json: Expected double-quoted property name in JSON at position 948 (line 36 column 5)
+      at JSON.parse (<anonymous>)
+      at C:\Users\oumes\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\oumes\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\oumes\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "navcertitrans",
+    "version": "1.2.1",
+    "description": "Navigateur personnalisé pour CertiTrans",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron .",
+      "electron": "electron .",
+      "pack": "electron-builder --dir",
+      "dist": "electron-builder",
+      "dev": "vite",
+      "build": "vite build",
+      "prepare": "vite build",
+      "preview": "vite preview",
+      "start:dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\""
+    },
+    "build": {
+      "appId": "com.certitrans.browser",
+      "productName": "NavCertiTrans",
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "files": [
+        "dist/**/*",
+        "main.js",
+        "preload.js",
+        "src/assets/**/*"
+      ],
+      "directories": {
+        "buildResources": "assets"
+      },
+      "publish": {
+        "provider": "github",
+        "owner": "Azed-Oume",
+        "repo": "NavCertiTrans",
+        "draft": false,
+        "prerelease": false ,
+      },
+      "win": {
+        "target": "nsis",
+        "icon": "src/assets/icons/icon.ico"
+      },
+      "nsis": {
+        "createDesktopShortcut": true,
+        "createStartMenuShortcut": true,
+        "shortcutName": "NavCertiTrans"
+      },
+      "linux": {
+        "target": "AppImage",
+        "icon": "src/assets/icons/icon.png"
+      }
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Azed-Oume/NavCertiTrans.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/Azed-Oume/NavCertiTrans/issues"
+    },
+    "homepage": "https://github.com/Azed-Oume/NavCertiTrans#readme",
+    "dependencies": {
+      "@electron/remote": "^2.1.2",
+      "electron-updater": "^6.6.2",
+      "express": "^5.1.0",
+      "react": "^19.1.0",
+      "react-cookie": "^8.0.1",
+      "react-dom": "^19.1.0",
+      "react-router-dom": "^7.5.0"
+    },
+    "devDependencies": {
+      "@vitejs/plugin-react": "^4.4.0",
+      "concurrently": "^9.1.2",
+      "electron": "^35.1.5",
+      "electron-builder": "^26.0.12",
+      "vite": "^6.3.0",
+      "wait-on": "^8.0.3"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

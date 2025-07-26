@@ -31,6 +31,9 @@ function createWindow() {
   Menu.setApplicationMenu(null);
 
   const isDev = !app.isPackaged;
+  win.webContents.setUserAgent(
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+);
   if (isDev) {
     win.loadURL("http://localhost:1234"); // correspond à defaultURL côté webview
   } else {
@@ -118,6 +121,10 @@ app.whenReady().then(() => {
       title: "Mise à jour prête",
       body: "Redémarre l'application pour l'appliquer.",
     }).show();
+
+    setTimeout(() => {
+    autoUpdater.quitAndInstall(); // ← c’est ça qui applique vraiment la mise à jour
+  }, 3000); // attend 3 secondes pour que l'utilisateur voie la notif
   });
 });
 
