@@ -17,7 +17,6 @@ const root = createRoot(container);
 // 🚀 Affichage de l’interface React
 root.render(
   <HashRouter>
-      {/* <div className="d-flex flex-column min-vh-100"> */}
       <div className="d-flex flex-column min-vh-100">
         <main className="flex-grow-1">
           <App />

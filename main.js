@@ -1,6 +1,6 @@
-// Description: Main process for an Electron application with auto-update, notifications, and custom window handling.
+// 📦 main.js – Electron main process sécurisé pour NavCertiTrans
 
-const { app, BrowserWindow, Menu, ipcMain, shell, Notification, globalShortcut } = require("electron");
+const { app, BrowserWindow, Menu, shell, Notification, globalShortcut, ipcMain } = require("electron");
 const path = require("path");
 const remoteMain = require("@electron/remote/main");
 const { autoUpdater } = require("electron-updater");
@@ -23,31 +23,37 @@ function createWindow() {
   });
 
   remoteMain.enable(win);
-  new Notification({ title: "Test", body: "Est-ce que tu vois cette notif ?" }).show();
 
+  // ✅ Notification de test (optionnelle)
+  new Notification({ title: "Bienvenue", body: "NavCertiTrans est lancé." }).show();
 
-  // ❌ Supprimer complètement le menu système
+  // ❌ Supprimer le menu système
   Menu.setApplicationMenu(null);
 
   const isDev = !app.isPackaged;
   if (isDev) {
-    win.loadURL("http://localhost:5173");
+    win.loadURL("http://localhost:1234"); // correspond à defaultURL côté webview
   } else {
-    // win.loadFile(path.join(__dirname, "dist/index.html"));
     win.loadURL(`file://${__dirname}/dist/index.html#/`);
   }
 
-  // 🔗 Ouvrir certains liens dans le navigateur externe
+  // 🔒 Bloquer toutes les ouvertures sauf exceptions explicites
   win.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith("https://www.google.com/maps") || url.startsWith("https://wa.me")) {
+    const allowedPrefixes = [
+      "https://www.google.com/maps",
+      "https://wa.me"
+    ];
+
+    if (allowedPrefixes.some(prefix => url.startsWith(prefix))) {
       shell.openExternal(url);
       return { action: "deny" };
     }
-    win.webContents.send("open-new-tab", url);
+
+    console.warn("❌ Lien bloqué :", url);
     return { action: "deny" };
   });
 
-  // 🎯 Raccourcis clavier internes
+  // 🔄 Raccourcis clavier utiles uniquement
   win.webContents.on("before-input-event", (event, input) => {
     const { control, key } = input;
 
@@ -66,21 +72,16 @@ function createWindow() {
       win.webContents.send("navigate-in-tab", "forward");
     }
 
+    // 🔐 DevTools désactivés
     if ((control && key === "d") || key === "F12") {
-      event.preventDefault();
-      win.webContents.toggleDevTools();
+      event.preventDefault(); // Ne rien faire
     }
   });
 
-  // 🔄 Mise à jour auto au démarrage
+  // 🔄 Vérifier les mises à jour automatiquement
   autoUpdater.checkForUpdatesAndNotify();
 
-  // ✅ Enregistrer les raccourcis globaux
-  globalShortcut.register('F12', () => {
-    const focused = BrowserWindow.getFocusedWindow();
-    if (focused) focused.webContents.toggleDevTools();
-  });
-
+  // ✅ Raccourcis globaux utiles
   globalShortcut.register('Control+Left', () => {
     win.webContents.send('navigate-in-tab', 'back');
   });
@@ -88,21 +89,24 @@ function createWindow() {
   globalShortcut.register('Control+Right', () => {
     win.webContents.send('navigate-in-tab', 'forward');
   });
+
+  // ❌ F12 désactivé globalement
+  // globalShortcut.register('F12', () => {});
 }
 
 app.whenReady().then(() => {
   createWindow();
 
   autoUpdater.on("update-available", () => {
-    new Notification({ title: "Mise à jour", body: "Une nouvelle version est disponible." }).show();
+    new Notification({ title: "Mise à jour disponible", body: "Une nouvelle version sera installée automatiquement." }).show();
   });
 
   autoUpdater.on("update-not-available", () => {
-    console.log("❌ Aucune mise à jour disponible.");
+    console.log("✅ Application à jour.");
   });
 
   autoUpdater.on("error", (error) => {
-    console.error("🚨 Erreur de mise à jour :", error);
+    console.error("🚨 Erreur lors de la mise à jour :", error);
   });
 
   autoUpdater.on("download-progress", (progress) => {
@@ -112,14 +116,13 @@ app.whenReady().then(() => {
   autoUpdater.on("update-downloaded", () => {
     new Notification({
       title: "Mise à jour prête",
-      body: "Redémarre l'application pour appliquer la mise à jour.",
+      body: "Redémarre l'application pour l'appliquer.",
     }).show();
   });
 });
 
-// 📬 Vérification manuelle depuis le renderer
+// 📬 Vérification manuelle depuis le renderer (si utilisée)
 ipcMain.on("check-for-update", (event) => {
-  console.log("🔄 Vérification manuelle de mise à jour...");
   autoUpdater.checkForUpdates();
 
   autoUpdater.once("update-not-available", () => {
@@ -135,14 +138,16 @@ ipcMain.on("check-for-update", (event) => {
   });
 });
 
-// 🌐 Ouverture de lien externe depuis le renderer
+// 🌐 Lien externe autorisé depuis le renderer
 ipcMain.on("open-external", (event, url) => {
-  console.log("🔗 Lien externe ouvert :", url);
+  console.log("🔗 Ouverture externe :", url);
   shell.openExternal(url);
 });
 
+// 🧹 Quitter proprement si toutes les fenêtres sont fermées
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
 
+// 🔧 Optimisation Electron (évite cache GPU inutile)
 app.commandLine.appendSwitch("disable-gpu-shader-disk-cache");
